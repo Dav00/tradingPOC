@@ -7,6 +7,7 @@ import org.ddomicar.trading.models.Operation;
 import org.ddomicar.trading.repositories.AssetRepository;
 import org.ddomicar.trading.repositories.OperationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -64,5 +65,9 @@ public class OperationService {
         result.setType(operationRequestDto.getType());
         log.info("Operation to be created: " + result);
         return result;
+    }
+
+    public Operation getOperationsById(Long id) {
+        return operationRepository.findById(id).orElse(null);
     }
 }
