@@ -61,6 +61,7 @@ public class OperationService {
         result.setPrice(operationRequestDto.getPrice());
         result.setQuantity(operationRequestDto.getQuantity());
         result.setTimeStamp(new Date());
+        result.setType(operationRequestDto.getType());
         log.info("Operation to be created: " + result);
         return result;
     }
