@@ -5,8 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
-import org.ddomicar.trading.services.OperationService;
-
 import java.text.DecimalFormat;
 import java.util.Date;
 
@@ -23,14 +21,16 @@ public class Operation {
     Date timeStamp;
     double quantity;
     double price;
+    String type;
     @ManyToOne
     Asset asset;
 
-    public Operation(double quantity, double price, Asset asset){
+    public Operation(double quantity, double price, Asset asset, String type){
         this.timeStamp = new Date();
         this.quantity = quantity;
         this.price = price;
         this.asset = asset;
+        this.type = type;
     }
 
     double getTotalPrice() {

@@ -32,7 +32,24 @@ public class OperationController {
             return new ResponseEntity(e.getMessage(), HttpStatusCode.valueOf(500));
         }
     }
-
+    @GetMapping("/buy/all")
+    public ResponseEntity getAllBuyOperationsEndpoint(){
+        try{
+            return new ResponseEntity(operationService.getBuyOperations() ,HttpStatusCode.valueOf(200));
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatusCode.valueOf(500));
+        }
+    }
+    @GetMapping("/sell/all")
+    public ResponseEntity getAllSellOperationsEndpoint(){
+        try{
+            return new ResponseEntity(operationService.getSellOperations() ,HttpStatusCode.valueOf(200));
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatusCode.valueOf(500));
+        }
+    }
     @PostMapping("/")
     public ResponseEntity createOperationEndpoint(OperationRequestDto operationRequestDto){
         try{

@@ -21,7 +21,7 @@ public class OperationService {
     @Autowired
     AssetRepository assetRepository;
 
-    public  OperationService(OperationRepository operationRepository, AssetRepository assetRepository){
+    public OperationService(OperationRepository operationRepository, AssetRepository assetRepository) {
         this.operationRepository = operationRepository;
         this.assetRepository = assetRepository;
         startTestData();
@@ -34,8 +34,8 @@ public class OperationService {
         assets.add(new Asset("Apple", "AAPL"));
         assets.add(new Asset("Microsoft", "MSFT"));
         assetRepository.saveAll(assets);
-        operations.add(new Operation(137.87, 3, assetRepository.findById(1L).orElse(null)));
-        operations.add(new Operation(135.20, 1, assetRepository.findById(2L).orElse(null)));
+        operations.add(new Operation(137.87, 3, assetRepository.findById(1L).orElse(null), "buy"));
+        operations.add(new Operation(135.20, 1, assetRepository.findById(2L).orElse(null), "buy") );
         operationRepository.saveAll(operations);
     }
 
@@ -43,17 +43,25 @@ public class OperationService {
         return operationRepository.findAll();
     }
 
+    public List<Operation> getBuyOperations(){
+        return operationRepository.findByType("buy");
+    }
+
+    public List<Operation> getSellOperations(){
+        return operationRepository.findByType("sell");
+    }
+
     public Object saveOperation(OperationRequestDto operationRequestDto) {
         return operationRepository.save(operationDtoToOperation(operationRequestDto));
     }
 
     private Operation operationDtoToOperation(OperationRequestDto operationRequestDto) {
-        var resultado = new Operation();
-        resultado.setAsset(assetRepository.findById(operationRequestDto.getAssetId()).orElse(null));
-        resultado.setPrice(operationRequestDto.getPrice());
-        resultado.setQuantity(operationRequestDto.getQuantity());
-        resultado.setTimeStamp(new Date());
-        log.info("Operation to be created: "+ resultado);
-        return resultado;
+        var result = new Operation();
+        result.setAsset(assetRepository.findById(operationRequestDto.getAssetId()).orElse(null));
+        result.setPrice(operationRequestDto.getPrice());
+        result.setQuantity(operationRequestDto.getQuantity());
+        result.setTimeStamp(new Date());
+        log.info("Operation to be created: " + result);
+        return result;
     }
 }
